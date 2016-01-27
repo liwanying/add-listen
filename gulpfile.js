@@ -2,18 +2,21 @@
  * @Author: 婉君
  * @Date:   2016-01-26 20:19:59
  * @Last Modified by:   婉君
- * @Last Modified time: 2016-01-27 13:33:26
+ * @Last Modified time: 2016-01-27 19:32:11
  */
 
 'use strict';
 var gulp = require('gulp');
 var less = require('gulp-less');
-var cssnano = require('gulp-cssnano')
+var cssnano = require('gulp-cssnano');
 gulp.task('styles', function() {
   gulp.src("src/css/*.less")
     .pipe(less())
     .pipe(cssnano())
     .pipe(gulp.dest("dist/css"))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
 });
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
@@ -22,6 +25,9 @@ gulp.task('script', function() {
     .pipe(concat('all.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist/script'))
+    .pipe(browserSync.reload({
+      stream: true
+    }));
 })
 var htmlmin = require('gulp-htmlmin');
 gulp.task('html', function() {
@@ -34,4 +40,17 @@ gulp.task('html', function() {
     .pipe(browserSync.reload({
       stream: true
     }));
+})
+var browserSync = require('browser-sync');
+gulp.task('serve', function() {
+  browserSync({
+    server: {
+      baseDir: ['dist']
+    },
+  }, function(err, bs) {
+    console.log(bs.options.getIn(["urls", "local"]));
+  });
+  guip.watch('src/css/*.less', ['style']);
+  guip.watch('src/script/*.js', ['script']);
+  guip.watch('src/*.html', ['html']);
 })
