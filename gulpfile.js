@@ -2,7 +2,7 @@
  * @Author: 婉君
  * @Date:   2016-01-26 20:19:59
  * @Last Modified by:   婉君
- * @Last Modified time: 2016-01-27 19:32:11
+ * @Last Modified time: 2016-01-28 19:14:03
  */
 
 'use strict';
@@ -50,7 +50,7 @@ gulp.task('serve', function() {
   }, function(err, bs) {
     console.log(bs.options.getIn(["urls", "local"]));
   });
-  guip.watch('src/css/*.less', ['style']);
-  guip.watch('src/script/*.js', ['script']);
-  guip.watch('src/*.html', ['html']);
+  gulp.watch('src/css/*.less', ['styles']);
+  gulp.watch('src/script/*.js', ['script']);
+  gulp.watch('src/*.html', ['html']);
 })
